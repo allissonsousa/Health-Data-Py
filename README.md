@@ -17,16 +17,16 @@ Analise e levantamentos de dados gerais sobre obitos no brasil de 1979 a 1984
 <p>5 - As principais causas de morte evitáveis variam significativamente entre grupos demográficos?</p>
 <p>6 - Ao longo dos anos esses aspectos sociais e demográficos tem impactado de forma positiva esse estudo?</p>
 
-Fluxo do estudo : 
+# Fluxo do estudo : 
 
-1 - filtrar dados relevantes e dados que não são relevantes, transformando os arquivos csv e eliminando colunas que nao sao do meu interesse
-2 - levantar oque são causas evitáveis de obito
-3 - fazer uma relação raça x região x causas evitáveis
-4 - fazer o mesmo para os outros anos
-5 - imprimir isso através de dashboards personalizáveis e que imprimam gráficos relacionais
-6 - fazer a relação entre todos os anos, levantando picos, possíveis causas de aumento/queda
-7 - visão geral do comportamento dos dados ao longo dos anos
-8 - conclusão da analise qualitativa por modelo de IA"""
+<p>1 - filtrar dados relevantes e dados que não são relevantes, transformando os arquivos csv e eliminando colunas que nao sao do meu interesse</p>
+<p>2 - levantar oque são causas evitáveis de obito</p>
+<p>3 - fazer uma relação raça x região x causas evitáveis</p>
+<p>4 - fazer o mesmo para os outros anos</p>
+<p>5 - imprimir isso através de dashboards personalizáveis e que imprimam gráficos relacionais</p>
+<p>6 - fazer a relação entre todos os anos, levantando picos, possíveis causas de aumento/queda</p>
+<p>7 - visão geral do comportamento dos dados ao longo dos anos</p>
+<p>8 - conclusão da analise qualitativa por modelo de IA"""</p>
 
 <h1>VAMOS AOS DADOS</h1>
 Fonte dos dados : todos os dados desse estudo foram obtidos pelos sistemas públicos de dados do sus (DATASUS)
