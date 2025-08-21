@@ -27,8 +27,11 @@ Analise e levantamentos de dados gerais sobre obitos no brasil de 1979 a 1984
 <p>8 - conclusão da analise qualitativa por modelo de IA"""</p>
 
 <h1>VAMOS AOS DADOS</h1>
+<p>Conforme instruido no dicionario de dados é necessário fazer uma conversão da coluna idade, mais especificamente nesse caso, para dias de vida</p>
+<p>Uso então módulos vba para fazer as alterações no próprio excel, por questões de desempenho</p>
+<img height="300px" src="https://github.com/user-attachments/assets/cce4836a-1178-4686-bfa8-27094a717d7e" />
+<img src="https://github.com/allissonsousa/Health-Data-Py/blob/main/resources/SEXO.png?raw=true" height="300px"/><img src="https://github.com/allissonsousa/Health-Data-Py/blob/main/resources/Localidade.png?raw=true" height="300px"/>
 
-<img src="https://github.com/allissonsousa/Health-Data-Py/blob/main/resources/SEXO.png?raw=true" height="200px"/><img src="https://github.com/allissonsousa/Health-Data-Py/blob/main/resources/Localidade.png?raw=true" height="200px"/>
 
 <h1>RESPOSTAS</h1>
 
