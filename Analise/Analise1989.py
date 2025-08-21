@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import math
 import csv
 
-dado = r'C:\Users\allisson.avila\Documents\GitHub\Health-Data-Py\Analise\Mortalidade_Geral_1989.xlsx'
+dado = r'C:\Users\allisson.avila\Documents\GitHub\Health-Data-Py\PLanilhas\Mortalidade_Geral_1989.xlsx'
 #--------------------------------------------------
 # LOCALIDADE --- obtenção de contagem dos locais mais recorrentes de mortalidade [hospital,via publica, outros]
 
