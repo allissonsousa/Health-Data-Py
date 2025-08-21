@@ -27,10 +27,11 @@ Analise e levantamentos de dados gerais sobre obitos no brasil de 1979 a 1984
 <p>8 - conclusão da analise qualitativa por modelo de IA"""</p>
 
 <h1>VAMOS AOS DADOS</h1>
-Fonte dos dados : todos os dados desse estudo foram obtidos pelos sistemas públicos de dados do sus (DATASUS)
-https://dados.gov.br/dados/conjuntos-dados/sim-1979-2019
+
+<img src="https://github.com/allissonsousa/Health-Data-Py/blob/main/resources/SEXO.png?raw=true" height="200px"/><img src="https://github.com/allissonsousa/Health-Data-Py/blob/main/resources/Localidade.png?raw=true" height="200px"/>
 
 <h1>RESPOSTAS</h1>
 
-<img src="https://github.com/allissonsousa/Health-Data-Py/blob/main/resources/SEXO.png?raw=true" height="200px"/>
-<img src="https://github.com/allissonsousa/Health-Data-Py/blob/main/resources/Localidade.png?raw=true" height="200px"/>
+
+Fonte dos dados : todos os dados desse estudo foram obtidos pelos sistemas públicos de dados do sus (DATASUS)
+https://dados.gov.br/dados/conjuntos-dados/sim-1979-2019
