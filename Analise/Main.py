@@ -5,12 +5,13 @@ import matplotlib.pyplot as plt
 import math
 import csv
 
-
 dado = r'C:\Users\allisson.avila\Documents\GitHub\Health-Data-Py\Analise\Mortalidade_Geral_1989.xlsx'
 
 # LOCALIDADE --- btenção de contagem dos locail mais recorrentes de mortalidade
 
 arquivo = pd.read_excel(dado)
+
+
 contagem = arquivo['LOCALOBITO'].value_counts().reset_index()
 contagem.columns = ['Local do Obito', 'Quantidade']
 
@@ -34,24 +35,30 @@ for barra in barras:
     plt.text(barra.get_x() + barra.get_width()/2, altura + 1, str(altura), ha='center', fontsize=8)
 plt.show()
 
-generos = arquivo['SEXO'].value_counts().reset_index()
-generos.columns = ['SEXO', 'Quantidade']
-nulo = generos.loc[generos['SEXO'] == 0, 'Quantidade'].sum()
-feminino = generos.loc[generos['SEXO'] == 1, 'Quantidade'].sum()
-masculino = generos.loc[generos['SEXO'] == 2, 'Quantidade'].sum()
+
+
+
+Generos = arquivo['SEXO'].value_counts().reset_index()
+Generos.columns = ['SEXO', 'Quantidade']
+
+nulo = Generos.loc[Generos['SEXO'] == 0, 'Quantidade'].sum()
+feminino = Generos.loc[Generos['SEXO'] == 1, 'Quantidade'].sum()
+masculino = Generos.loc[Generos['SEXO'] == 2, 'Quantidade'].sum()
 
 nomes_generos = ['Masculino','Feminino','Indefinido']
 valoresgeneros = [masculino, feminino, nulo]
 #plotagem do grafico
 plt.figure(figsize = (6,6))
-genbarra = plt.bar(nomes_generos, valoresgeneros,color='red')
-plt.xlabel('Genero')
+genbarra = plt.bar(nomes_generos, valoresgeneros,color='blue')
+plt.xlabel('SEXO')
 plt.ylabel('Quantidade')
 plt.title('Quantidade de obitos por genero em 1989')
-plt.xticks(contagem['Genero'])
+plt.xticks(Generos['SEXO'])
 for g in genbarra:
     altura = g.get_height()
-    plt.text(g.get) #continua fazendo
+    plt.text(g.get_x() + g.get_width()/2, altura + 1, str(altura), ha='center', fontsize=8)
+
+plt.show()
 
 
 
