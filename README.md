@@ -32,4 +32,5 @@ https://dados.gov.br/dados/conjuntos-dados/sim-1979-2019
 
 <h1>RESPOSTAS</h1>
 
-<img src="https://github.com/allissonsousa/Health-Data-Py/blob/main/resources/SEXO.png?raw=true"/>
+<img src="https://github.com/allissonsousa/Health-Data-Py/blob/main/resources/SEXO.png?raw=true" height="200px"/>
+<img src="https://github.com/allissonsousa/Health-Data-Py/blob/main/resources/Localidade.png?raw=true" height="200px"/>
