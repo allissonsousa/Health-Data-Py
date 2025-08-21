@@ -31,3 +31,5 @@ Fonte dos dados : todos os dados desse estudo foram obtidos pelos sistemas públ
 https://dados.gov.br/dados/conjuntos-dados/sim-1979-2019
 
 <h1>RESPOSTAS</h1>
+
+<img src="https://github.com/allissonsousa/Health-Data-Py/blob/main/resources/SEXO.png?raw=true"/>
