@@ -16,7 +16,7 @@ response = requests.get(url, params=params, headers={'accept': 'application/json
 #verifica se a conexao deu certo e tenta ja pegar uma planilha de ano especifico
 if response.status_code == 200:
     df = pd.DataFrame(response.json()) #transforma em Dataframe do pandas
-    df_2020 = df[df['ano'] == 1989]
+    df_2020 = df
     print(df_2020.head())
 else:
     print(f"Erro ao consultar dados{response.status_code}")
@@ -31,4 +31,4 @@ for i in range(0, 20): #vou pegar só 10 paginas como exemplo pra nao sobrecarre
         todos_dados.extend(r.json())
 
 df = pd.DataFrame(todos_dados)
-print(df.shape)
+print(df.head())
