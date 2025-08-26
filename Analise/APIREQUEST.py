@@ -7,7 +7,7 @@ url = "http://apidadosabertos.saude.gov.br/vigilancia-e-meio-ambiente/sistema-de
 #parametros da requisição
 params = {
     'limit' : 1000,
-    'offset' : 1
+    'offset' : 10
 }
 
 #requisição GET
@@ -31,10 +31,11 @@ for i in range(0, 4): #vou pegar só 10 paginas como exemplo pra nao sobrecarreg
     params = {'limit' : 1000, 'offset' : i}
     r = requests.get(url, params=params, headers={'accept': 'application/json'})
     if r.status_code == 200:
-        todos_dados.extend(r.json())
+        dado_aberto = pd.json_normalize(r.json())
+        todos_dados.extend(dado_aberto)
         print(f"todos dados foram para o dataframe {i+1}")
     else:
         print(f"Erro ao consultar dados{r.status_code}")
 
 todos_df = pd.DataFrame(todos_dados)
-print(todos_df.head())
+print(todos_df.head)
