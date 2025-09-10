@@ -39,3 +39,4 @@ for i in range(0, 4): #vou pegar só 10 paginas como exemplo pra nao sobrecarreg
 
 todos_df = pd.DataFrame(todos_dados)
 print(todos_df.head)
+
