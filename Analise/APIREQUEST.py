@@ -27,16 +27,20 @@ else:
 
 # PEGANDO TODOS OS DADOS DA API
 todos_dados = []
-for i in range(0, 4): #vou pegar só 10 paginas como exemplo pra nao sobrecarregar durante o teste
+for i in range(0, 20): #vou pegar só 20 paginas como exemplo pra nao sobrecarregar durante o teste
     params = {'limit' : 1000, 'offset' : i}
     r = requests.get(url, params=params, headers={'accept': 'application/json'})
     if r.status_code == 200:
-        dado_aberto = pd.json_normalize(r.json())
-        todos_dados.extend(dado_aberto)
-        print(f"todos dados foram para o dataframe {i+1}")
+        dado_aberto = pd.json_normalize(r.json()['sim'])  #normalizando o json para tabela
+        todos_dados.append(dado_aberto)     #adicionando a pagina a lista de paginas
+        print(f"Pagina {i+1} carregada com sucesso!")
     else:
         print(f"Erro ao consultar dados{r.status_code}")
 
-todos_df = pd.DataFrame(todos_dados)
-print(todos_df.head)
+todos_df = pd.concat(todos_dados, ignore_index=True)  #unindo todas as paginas em uma só
+contagem_sexo = todos_df['sexo'].value_counts()       #contagem dos sexos
+print(contagem_sexo)
+print("Colunas disponíveis:", todos_df.columns.tolist())
+
+
 
