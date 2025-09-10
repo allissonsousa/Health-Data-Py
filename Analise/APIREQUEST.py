@@ -27,7 +27,7 @@ else:
 
 # PEGANDO TODOS OS DADOS DA API
 todos_dados = []
-for i in range(0, 20): #vou pegar só 20 paginas como exemplo pra nao sobrecarregar durante o teste
+for i in range(0, 2): #vou pegar só 20 paginas como exemplo pra nao sobrecarregar durante o teste
     params = {'limit' : 1000, 'offset' : i}
     r = requests.get(url, params=params, headers={'accept': 'application/json'})
     if r.status_code == 200:
