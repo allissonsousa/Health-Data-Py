@@ -27,7 +27,7 @@ else:
 
 # PEGANDO TODOS OS DADOS DA API
 todos_dados = []
-for i in range(0, 2): #vou pegar só 20 paginas como exemplo pra nao sobrecarregar durante o teste
+for i in range(0, 10): #vou pegar só 10 paginas como exemplo pra nao sobrecarregar durante o teste
     params = {'limit' : 1000, 'offset' : i}
     r = requests.get(url, params=params, headers={'accept': 'application/json'})
     if r.status_code == 200:
@@ -37,9 +37,13 @@ for i in range(0, 2): #vou pegar só 20 paginas como exemplo pra nao sobrecarreg
     else:
         print(f"Erro ao consultar dados{r.status_code}")
 
+# df.aply permite aplicar uma função a uma coluna do DF
+
+
 todos_df = pd.concat(todos_dados, ignore_index=True)  #unindo todas as paginas em uma só
-contagem_sexo = todos_df['sexo'].value_counts()       #contagem dos sexos
-print(contagem_sexo)
+contagem_local = todos_df['codmunres'].value_counts()
+contagem_sexo = todos_df['racacor'].value_counts()       #contagem dos sexos
+print(contagem_sexo, contagem_local)
 print("Colunas disponíveis:", todos_df.columns.tolist())
 
 
