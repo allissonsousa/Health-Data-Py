@@ -1,53 +1,50 @@
 import requests
 import pandas as pd
 
-# URL da API do DATASUS
-url = "http://apidadosabertos.saude.gov.br/vigilancia-e-meio-ambiente/sistema-de-informacao-sobre-mortalidade"
+#url da api
+url = "http://apidadosabertos.saude.gov.br/vigilancia-e-meio-ambiente/sistema-de-informacao-sobre-mortalidade?limit=20&offset=1"
 
-# Parâmetros da requisição
+#parametros da requisição
 params = {
-    'limit': 1000,
-    'offset': 0
+    'limit' : 1000,
+    'offset' : 10
 }
 
-# Lista para armazenar todos os dados
+#requisição GET
+response = requests.get(url, params=params, headers={'accept': 'application/json'})
+
+#verifica se a conexao deu certo e tenta ja pegar uma planilha de ano especifico
+if response.status_code == 200:
+    df = pd.DataFrame(response.json()) #transforma em Dataframe do pandas
+    df_aberto = pd.json_normalize(df['sim'])
+    print(df_aberto.head())
+    for i, col in enumerate (df.columns):
+        print(i, col)
+else:
+    print(f"Erro ao consultar dados{response.status_code}")
+
+
+
+# PEGANDO TODOS OS DADOS DA API
 todos_dados = []
-
-# Exemplo: pegar as primeiras 2 páginas
-for i in range(2):
-    params['offset'] = i * 1000
-    response = requests.get(url, params=params, headers={'accept': 'application/json'})
-    if response.status_code == 200:
-        df_pag = pd.json_normalize(response.json()['sim'])
-        todos_dados.append(df_pag)
-        print(f"Página {i+1} carregada")
+for i in range(0, 10): #vou pegar só 10 paginas como exemplo pra nao sobrecarregar durante o teste
+    params = {'limit' : 1000, 'offset' : i}
+    r = requests.get(url, params=params, headers={'accept': 'application/json'})
+    if r.status_code == 200:
+        dado_aberto = pd.json_normalize(r.json()['sim'])  #normalizando o json para tabela
+        todos_dados.append(dado_aberto)     #adicionando a pagina a lista de paginas
+        print(f"Pagina {i+1} carregada com sucesso!")
     else:
-        print(f"Erro na página {i+1}: {response.status_code}")
+        print(f"Erro ao consultar dados{r.status_code}")
 
-# Concatenar todas as páginas em um único DataFrame
-todos_df = pd.concat(todos_dados, ignore_index=True)
+# df.aply permite aplicar uma função a uma coluna do DF
 
-# Contagem por código de município
+
+todos_df = pd.concat(todos_dados, ignore_index=True)  #unindo todas as paginas em uma só
 contagem_local = todos_df['codmunres'].value_counts()
+contagem_sexo = todos_df['racacor'].value_counts()       #contagem dos sexos
+print(contagem_sexo, contagem_local)
+print("Colunas disponíveis:", todos_df.columns.tolist())
 
-# Função para consultar IBGE usando código com 7 dígitos
-def obter_nome_municipio_ibge(codigo):
-    codigo_str = str(codigo).zfill(7)  # garante 7 dígitos
-    url_ibge = f"https://servicodados.ibge.gov.br/api/v1/localidades/municipios/{codigo_str}"
-    try:
-        r = requests.get(url_ibge)
-        if r.status_code == 200:
-            return r.json().get('nome')
-        else:
-            return f"Desconhecido ({codigo})"
-    except:
-        return f"Desconhecido ({codigo})"
 
-# Mapear todos os códigos para nomes
-nomes_municipios = {codigo: obter_nome_municipio_ibge(codigo) for codigo in contagem_local.index}
 
-# Substituir índices da Series pelos nomes
-contagem_local.index = contagem_local.index.map(lambda x: nomes_municipios.get(x, f"Desconhecido ({x})"))
-
-# Resultado final
-print(contagem_local)
