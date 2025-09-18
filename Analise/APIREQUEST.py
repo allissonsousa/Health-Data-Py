@@ -1,5 +1,6 @@
 import requests
 import pandas as pd
+import matplotlib.pyplot as plt
 
 #url da api
 url = "http://apidadosabertos.saude.gov.br/vigilancia-e-meio-ambiente/sistema-de-informacao-sobre-mortalidade?limit=20&offset=1"
@@ -42,9 +43,23 @@ for i in range(0, 10): #vou pegar só 10 paginas como exemplo pra nao sobrecarre
 
 todos_df = pd.concat(todos_dados, ignore_index=True)  #unindo todas as paginas em uma só
 contagem_local = todos_df['codmunres'].value_counts()
+print(todos_df['dtobito'].value_counts())
 contagem_sexo = todos_df['racacor'].value_counts()       #contagem dos sexos
 print(contagem_sexo, contagem_local)
 print("Colunas disponíveis:", todos_df.columns.tolist())
 
+nulo = contagem_sexo.loc[contagem_sexo['SEXO'] == 0, 'Quantidade'].sum()
+feminino = contagem_sexo.loc[contagem_sexo['SEXO'] == 1, 'Quantidade'].sum()
+masculino = contagem_sexo.loc[contagem_sexo['SEXO'] == 2, 'Quantidade'].sum()
+nomes_generos = ['Masculino','Feminino','Indefinido']
+valoresgeneros = [masculino, feminino, nulo]
 
+#plotagem do grafico
 
+genbarra = plt.bar(nomes_generos, valoresgeneros,color='blue')
+plt.figure(figsize=(10,10))
+plt.bar(contagem_sexo.index, contagem_sexo.values)
+plt.xlabel("Quantidade")
+plt.ylabel("Gêneros")
+plt.title("Recorrência dos sexos")
+plt.show()
