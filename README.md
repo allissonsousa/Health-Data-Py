@@ -1,40 +1,99 @@
-# Health-Data-Py
-Analise e levantamentos de dados gerais sobre obitos no brasil de 1979 a 1984
 
-# Problemática !!
-<p>Neste estudo iremos analisar como a desigualdade de genero, preconceito e geolocalização podem influenciar nas taxas de mortalidade dentro do escopo das condições que implicam negligência médica</p>
+</head>
+<body>
+  <header>
+    <h1>Health-Data-Py</h1>
+    <p class="meta">Análise e levantamento de dados sobre óbitos no Brasil (períodos: 1979–1984 e 2017–2022) — foco: feminicídio em Minas Gerais</p>
+  </header>
 
-# Pontos importantes!!
-<p>Negligência: não atendimento ou mal atendimento do paciente resultando no óbito do mesmo</p>
-<p>Idade e sexo: esses dois fatores serão usados para o levantamento </p>
+  <section>
+    <h2>Resumo</h2>
+    <p class="lead">Este documento apresenta a versão acadêmica do projeto <em>Health-Data-Py</em>, cujo objetivo é examinar a influência de fatores sociais, raciais e geográficos sobre os níveis de mortalidade por feminicídio no estado de Minas Gerais. A análise compara dois recortes temporais (1979–1984 e 2017–2022), investigando padrões espaciais e demográficos, diferenças entre sexo e idade, e possíveis associações com o nível de urbanização.</p>
+  </section>
 
-# Perguntas !!
-<p>1 - Há disparidade na mortálidade por negligência entre sexos?</p>
-<p>2 - Certas regiões apresentam mortalidade evitável maior, mesmo com perfis demográficos semelhantes?</p>
-<p>3 - Qual é a idade média de óbito para cada grupo de genero ou regional em causas específicas?</p>
-<p>4 - Existe associação entre nível de urbanização da origem e mortalidade por determinadas causas?</p>
-<p>6 - Ao longo dos anos esses aspectos sociais e demográficos tem evoluido de maneira positiva reduzindo essa taxa de mortalidade?</p>
+  <section>
+    <h2>1. Problema de pesquisa</h2>
+    <p>Investigar como determinantes sociais e demográficos contribuem para as taxas de mortalidade por feminicídio em Minas Gerais e avaliar a evolução desses indicadores ao longo das últimas décadas. Busca‑se identificar áreas de risco geográfico, disparidades por gênero e idade, bem como possíveis relações com indicadores de urbanização e vulnerabilidade social.</p>
+  </section>
 
-# Fluxo do estudo : 
+  <section>
+    <h2>2. Objetivos</h2>
+    <h3>2.1 Objetivo geral</h3>
+    <p>Quantificar e caracterizar a mortalidade por feminicídio em Minas Gerais, analisando variações temporais e espaciais nas séries históricas selecionadas.</p>
+    <h2>2.2 Objetivos específicos</h2>
+    <ul>
+      <li>Comparar a mortalidade entre sexos e estimar diferenças estatisticamente significativas;</li>
+      <li>Identificar municípios e regiões com maior incidência de feminicídio;</li>
+      <li>Calcular a idade média de óbito por gênero e por causa;</li>
+      <li>Avaliar associações entre nível de urbanização (rural/urbano) e causas de mortalidade;</li>
+      <li>Analisar a tendência temporal dos indicadores e possíveis mudanças entre os períodos 1979–1984 e 2017–2022.</li>
+    </ul>
+  </section>
 
-<p>1 - filtrar dados relevantes e dados que não são relevantes, transformando os arquivos csv e eliminando colunas que nao sao do meu interesse</p>
-<p>2 - levantar oque são causas evitáveis de obito</p>
-<p>3 - fazer uma relação genero x idade x região</p>
-<p>4 - fazer o mesmo para os outros anos</p>
-<p>5 - imprimir isso através de dashboards personalizáveis e que imprimam gráficos relacionais</p>
-<p>6 - fazer a relação entre todos os anos, levantando picos, possíveis causas de aumento/queda</p>
-<p>7 - visão geral do comportamento dos dados ao longo dos anos</p>
-<p>8 - conclusão da analise qualitativa por modelo de IA"""</p>
+  <section>
+    <h2>3. Perguntas de pesquisa</h2>
+    <ol>
+      <li>Existe disparidade na mortalidade entre os sexos em Minas Gerais?</li>
+      <li>Determinadas regiões ou municípios apresentam taxas mais elevadas de feminicídio?</li>
+      <li>Qual é a idade média ao óbito por grupo de gênero?</li>
+      <li>Há associação entre nível de urbanização e mortalidade por causas específicas (incluindo feminicídio)?</li>
+      <li>Ao longo das décadas avaliadas, os indicadores sociais e demográficos demonstram mudança que possa indicar redução das taxas de mortalidade?</li>
+    </ol>
+  </section>
 
-<h1>VAMOS AOS DADOS</h1>
-<p>Conforme instruido no dicionario de dados é necessário fazer uma conversão da coluna idade, mais especificamente nesse caso, para dias de vida</p>
-<p>Uso então módulos vba para fazer as alterações no próprio excel, por questões de desempenho</p>
-<img height="300px" src="https://github.com/user-attachments/assets/cce4836a-1178-4686-bfa8-27094a717d7e" />
-<img src="https://github.com/allissonsousa/Health-Data-Py/blob/main/resources/SEXO.png?raw=true" height="300px"/><img src="https://github.com/allissonsousa/Health-Data-Py/blob/main/resources/Localidade.png?raw=true" height="300px"/>
+  <section>
+    <h2>4. Metodologia</h2>
+    <p>O fluxo analítico planeado segue etapas reprodutíveis e transparentes:</p>
+    <ol>
+      <li><strong>Aquisição:</strong> importação dos dados via API governamental (SIM/Sistemas Abertos).</li>
+      <li><strong>Pré‑processamento:</strong> seleção e padronização de variáveis relevantes (ano do óbito, causa básica, sexo, idade, raça/cor, código do município de residência, nível de escolaridade e localidade).</li>
+      <li><strong>Filtragem temporal:</strong> agrupar o intervalo 1979–1984 em um único bloco para comparação com o período 2017–2022 (análises anuais também serão apresentadas).</li>
+      <li><strong>Análises descritivas:</strong> contagens, distribuições por sexo/idade/raça; taxas por 100.000 habitantes quando possível (requer dados populacionais complementares).</li>
+      <li><strong>Modelagem exploratória:</strong> testes de hipótese (qui‑quadrado, t‑test) para diferenças entre grupos; análise espacial (mapas de calor, taxas padronizadas por município); séries temporais para detecção de picos.</li>
+      <li><strong>Visualização e dashboard:</strong> painéis interativos com gráficos relacionais (histogramas, boxplots, mapas coropléticos, séries temporais).</li>
+    </ol>
+  </section>
 
+  <section>
+    <h2>5. Dados e pré‑processamento</h2>
+    <p>Serão realizadas as seguintes operações de tratamento de dados:</p>
+    <ul>
+      <li>Remoção de registros duplicados e correção de formatos;</li>
+      <li>Conversão de códigos para rótulos legíveis (ex.: sexo, raça/cor, naturalidade/município);</li>
+      <li>Imputação ou manejo de valores ausentes quando necessário (documentar cada decisão);</li>
+      <li>Agrupamento temporal (bloco 1979–1984) e criação de variáveis derivadas (faixa etária, ano, região geográfica).</li>
+    </ul>
+  </section>
 
-<h1>RESPOSTAS</h1>
+  <section>
+    <h2>6. Plano de análises</h2>
+    <p>As análises contemplarão, entre outras, as seguintes abordagens:</p>
+    <ul>
+      <li><strong>Descritiva:</strong> tabelas de frequência, médias, desvios‑padrão e medianas por subgrupos;</li>
+      <li><strong>Comparativa:</strong> testes estatísticos para avaliar diferenças por sexo, cor/raça e região;</li>
+      <li><strong>Espacial:</strong> mapas coropléticos com taxas por município e análise de clusters (ex.: Anselin Local Moran's I);</li>
+      <li><strong>Temporal:</strong> séries temporais e decomposição para identificar tendências e sazonalidade;</li>
+      <li><strong>Multivariada:</strong> modelos de regressão (logística ou Poisson) para estimar associações ajustadas entre determinantes sociais e risco de óbito por feminicídio.</li>
+    </ul>
+  </section>
 
+  <section>
+    <h2>7. Resultados esperados</h2>
+    <p>Espera‑se identificar padrões geográficos de maior risco, disparidades demográficas (idade, sexo, raça/cor) e possíveis alterações nas taxas entre os períodos comparados. Os resultados serão apresentados com intervalos de confiança e visualizações claras para suporte às interpretações.</p>
+  </section>
 
-Fonte dos dados : todos os dados desse estudo foram obtidos pelos sistemas públicos de dados do sus (DATASUS)
-https://dados.gov.br/dados/conjuntos-dados/sim-1979-2019
+  <section>
+    <h2>8. Conclusão e implicações</h2>
+    <p>As conclusões irão sintetizar evidências sobre determinantes sociais e geográficos do feminicídio em Minas Gerais e apontar recomendações para políticas públicas e pesquisas futuras, incluindo limitações dos dados e implicações éticas ao tratar informações sensíveis.</p>
+  </section>
+
+  <section>
+    <h2>9. Reprodutibilidade</h2>
+    <p>Todo o código de extração, limpeza e análise será disponibilizado no repositório <code>Health-Data-Py</code> com um <em>README</em> que documenta dependências, versão de pacotes e instruções para reproduzir os resultados.</p>
+  </section>
+
+  <footer>
+    <p>Autor: Equipe Health‑Data‑Py &nbsp;|&nbsp; Data: <time datetime="2025-09-19">2025‑09‑19</time></p>
+  </footer>
+</body>
+</html>
