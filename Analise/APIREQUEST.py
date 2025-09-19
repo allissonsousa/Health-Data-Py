@@ -1,65 +1,76 @@
 import requests
 import pandas as pd
-import matplotlib.pyplot as plt
+from concurrent.futures import ThreadPoolExecutor, as_completed
+from time import sleep
 
-#url da api
-url = "http://apidadosabertos.saude.gov.br/vigilancia-e-meio-ambiente/sistema-de-informacao-sobre-mortalidade?limit=20&offset=1"
+url = "https://apidadosabertos.saude.gov.br/vigilancia-e-meio-ambiente/sistema-de-informacao-sobre-mortalidade"
+limit = 1000
+num_paginas = 1000  # ajuste conforme necessidade
 
-#parametros da requisição
-params = {
-    'limit' : 1000,
-    'offset' : 10
-}
-
-#requisição GET
-response = requests.get(url, params=params, headers={'accept': 'application/json'})
-
-#verifica se a conexao deu certo e tenta ja pegar uma planilha de ano especifico
-if response.status_code == 200:
-    df = pd.DataFrame(response.json()) #transforma em Dataframe do pandas
-    df_aberto = pd.json_normalize(df['sim'])
-    print(df_aberto.head())
-    for i, col in enumerate (df.columns):
-        print(i, col)
-else:
-    print(f"Erro ao consultar dados{response.status_code}")
-
-
-
-# PEGANDO TODOS OS DADOS DA API
-todos_dados = []
-for i in range(0, 10): #vou pegar só 10 paginas como exemplo pra nao sobrecarregar durante o teste
-    params = {'limit' : 1000, 'offset' : i}
+# Função para buscar uma página
+def fetch_page(i):
+    params = {'limit': limit, 'offset': i * limit}
     r = requests.get(url, params=params, headers={'accept': 'application/json'})
+
     if r.status_code == 200:
-        dado_aberto = pd.json_normalize(r.json()['sim'])  #normalizando o json para tabela
-        todos_dados.append(dado_aberto)     #adicionando a pagina a lista de paginas
-        print(f"Pagina {i+1} carregada com sucesso!")
+        try:
+            data = r.json().get('sim', [])
+            if not data:
+                return pd.DataFrame()  # sem dados
+            df = pd.json_normalize(data)
+
+            # Filtra apenas colunas existentes com dados
+            cols = ['codmunres', 'racacor', 'causabas', 'dtobito']
+            cols_existentes = [c for c in cols if c in df.columns]
+            df = df[cols_existentes]
+
+            # Remove registros onde todas as colunas estão nulas
+            df = df.dropna(how='all', subset=cols_existentes)
+
+            print(f"Página {i+1} retornou {i+i} registros")
+            print('---' * 10)
+
+            return df
+        except Exception as e:
+            print(f"Erro ao processar página {i + 1}: {e}")
+            print('=-=' * 10)
+            return pd.DataFrame()
     else:
-        print(f"Erro ao consultar dados{r.status_code}")
+        print(f"Erro ao consultar página {i + 1}: {r.status_code}")
+        print('=-=' * 10)
+        return pd.DataFrame()
 
-# df.aply permite aplicar uma função a uma coluna do DF
 
+# Usando threads para acelerar
+resultados = []
+with ThreadPoolExecutor(max_workers=10) as executor:
+    futures = [executor.submit(fetch_page, i) for i in range(num_paginas)]
+    for future in as_completed(futures):
+        resultados.append(future.result())
 
-todos_df = pd.concat(todos_dados, ignore_index=True)  #unindo todas as paginas em uma só
-contagem_local = todos_df['codmunres'].value_counts()
-print(todos_df['dtobito'].value_counts())
-contagem_sexo = todos_df['racacor'].value_counts()       #contagem dos sexos
-print(contagem_sexo, contagem_local)
-print("Colunas disponíveis:", todos_df.columns.tolist())
+# Concatenando apenas DataFrames válidos
+validos = [df for df in resultados if not df.empty]
 
-nulo = contagem_sexo.loc[contagem_sexo['SEXO'] == 0, 'Quantidade'].sum()
-feminino = contagem_sexo.loc[contagem_sexo['SEXO'] == 1, 'Quantidade'].sum()
-masculino = contagem_sexo.loc[contagem_sexo['SEXO'] == 2, 'Quantidade'].sum()
-nomes_generos = ['Masculino','Feminino','Indefinido']
-valoresgeneros = [masculino, feminino, nulo]
+if validos:
+    todos_df = pd.concat(validos, ignore_index=True)
+    print("✅ Dados consolidados com sucesso!")
+    print('=-=' * 10)
+    print("Shape final:", todos_df.shape)
+    print('=-=' * 10)
+    print("Colunas disponíveis:", todos_df.columns.tolist())
+    print('=-=' * 10)
+else:
+    print("⚠️ Nenhum dado válido retornado da API.")
+    print('=⚠️=' * 10)
+    todos_df = pd.DataFrame()
 
-#plotagem do grafico
-
-genbarra = plt.bar(nomes_generos, valoresgeneros,color='blue')
-plt.figure(figsize=(10,10))
-plt.bar(contagem_sexo.index, contagem_sexo.values)
-plt.xlabel("Quantidade")
-plt.ylabel("Gêneros")
-plt.title("Recorrência dos sexos")
-plt.show()
+# Contagem real sem contar páginas vazias
+if not todos_df.empty:
+    print(f'Obitos por municipio:\n{todos_df["codmunres"].value_counts(dropna=True)}')
+    print('=-=' * 10)
+    print(f'Obitos por raça:\n{todos_df["racacor"].value_counts(dropna=True)}')
+    print('=-=' * 10)
+    print(f'Obitos por causa:\n{todos_df["causabas"].value_counts(dropna=True)}')
+    print('=-=' * 10)
+    print(f'Obitos por data:\n{todos_df["dtobito"].value_counts(dropna=True)}')
+    print('=-=' * 10)
