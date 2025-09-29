@@ -5,7 +5,7 @@ from time import sleep
 
 url = "https://apidadosabertos.saude.gov.br/vigilancia-e-meio-ambiente/sistema-de-informacao-sobre-mortalidade"
 limit = 1000
-num_paginas = 1000  # ajuste conforme necessidade
+num_paginas = 20  # ajuste conforme necessidade
 
 # Função para buscar uma página
 def fetch_page(i):
